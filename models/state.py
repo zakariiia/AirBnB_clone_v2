@@ -7,8 +7,7 @@ from models.city import City
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy.orm import relationship
-from models import storage
-
+import models
 
 
 class State(BaseModel, Base):
@@ -23,7 +22,7 @@ class State(BaseModel, Base):
         def cities(self):
             """getter attribute cities that returns the list of City."""
             c_list = []
-            for c in list(storage.all(c).values()):
+            for c in list(models.storage.all(City).values()):
                 if c.state_id == self.id:
                     c_list.append(c)
             return c_list
