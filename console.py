@@ -65,9 +65,6 @@ class HBNBCommand(cmd.Cmd):
                 obj = eval(my_list[0])()
             else:
                 obj = eval(my_list[0])(**kwargs)
-                print()
-                print(kwargs)
-                print()
                 storage.new(obj)
             print(obj.id)
             obj.save()
