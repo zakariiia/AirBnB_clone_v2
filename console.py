@@ -204,7 +204,7 @@ class HBNBCommand(cmd.Cmd):
             if name not in self.classes.keys():
                 print("** class doesn't exist **")
                 return
-            for key, obj in storage.all(self.classes[name]).items():
+            for key, obj in storage.all().items():
                 print_list.append(str(obj))
         else:
             for key, obj in storage.all().items():
