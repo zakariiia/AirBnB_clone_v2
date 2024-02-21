@@ -23,35 +23,29 @@ class DBStorage:
 
     def __init__(self):
         """Initialize a new DBStorage instance."""
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
-                                      format(getenv("HBNB_MYSQL_USER"),
-                                             getenv("HBNB_MYSQL_PWD"),
-                                             getenv("HBNB_MYSQL_HOST"),
-                                             getenv("HBNB_MYSQL_DB")),
+        Ur=getenv("HBNB_MYSQL_USER")
+        PWD=getenv("HBNB_MYSQL_PWD")
+        H=getenv("HBNB_MYSQL_HOST")
+        DB=getenv("HBNB_MYSQL_DB")
+        self.__engine = create_engine(f"mysql+mysqldb://{Ur}:{PWD}@{H}/{DB}",
                                       pool_pre_ping=True)
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query on the curret database session all objects of the given class.
-
-        If cls is None, queries all types of objects.
-
-        Return:
-            Dict of queried classes in the format <class name>.<obj id> = obj.
-        """
+        """Query on the curret database session all objects of the given class."""
         if cls is None:
-            objs = self.__session.query(State).all()
-            objs.extend(self.__session.query(City).all())
-            objs.extend(self.__session.query(User).all())
-            objs.extend(self.__session.query(Place).all())
-            objs.extend(self.__session.query(Review).all())
-            objs.extend(self.__session.query(Amenity).all())
+            ob = self.__session.query(State).all()
+            ob.extend(self.__session.query(City).all())
+            ob.extend(self.__session.query(User).all())
+            ob.extend(self.__session.query(Place).all())
+            ob.extend(self.__session.query(Review).all())
+            ob.extend(self.__session.query(Amenity).all())
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            objs = self.__session.query(cls)
-        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
+            ob = self.__session.query(cls)
+        return {"{}.{}".format(type(oob).__name__, oob.id): oob for oob in ob}
 
     def new(self, obj):
         """Add obj to the current database session."""
