@@ -11,8 +11,6 @@ class FileStorage:
     def all(self, cls=None):
         """Return a dictionary of instantiated objects in __objects."""
         if cls is not None:
-            # if type(cls) == str:
-            #     cls = eval(cls)
             cls_all = {}
             for key, val in FileStorage.__objects.items():
                 if type(val) == cls:
