@@ -1,0 +1,11 @@
+city
+
+places = relationship("Place", backref="cities",
+                        cascade="all, delete, delete-orphan")
+
+
+User
+    places = relationship("Place", backref="user",
+                        cascade='all, delete, delete-orphan')
+    reviews = relationship("Review", cascade='all, delete, delete-orphan',
+                           backref="user")
