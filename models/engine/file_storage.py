@@ -53,4 +53,7 @@ class FileStorage:
         """ Deletes an object from memory """
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+            try:
+                del FileStorage.__objects[key]
+            except KeyError:
+                pass
