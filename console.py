@@ -109,9 +109,8 @@ class HBNBCommand(cmd.Cmd):
             if not args:
                 raise SyntaxError()
             cmmnd = shlex.split(args)
-            # create the object like this => eval(BaseModel())
+            # create the object
             obj = eval("{}()".format(cmmnd[0]))
-            # populate the object's parameters
             for cmnd in cmmnd[1:]:
                 c = cmnd.split("=")
                 c[1] = c[1].strip('"')
@@ -132,26 +131,26 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, args):
         """ Method to show an individual object """
         new = args.partition(" ")
-        c_name = new[0]
-        c_id = new[2]
+        clas_name = new[0]
+        clss_id  = new[2]
 
         # guard against trailing args
-        if c_id and ' ' in c_id:
-            c_id = c_id.partition(' ')[0]
+        if clss_id  and ' ' in clss_id :
+            clss_id  = clss_id .partition(' ')[0]
 
-        if not c_name:
+        if not clas_name:
             print("** class name missing **")
             return
 
-        if c_name not in HBNBCommand.classes:
+        if clas_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        if not c_id:
+        if not clss_id :
             print("** instance id missing **")
             return
 
-        key = c_name + "." + c_id
+        key = clas_name + "." + clss_id 
         try:
             print(storage._FileStorage__objects[key])
         except KeyError:
@@ -165,24 +164,24 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, args):
         """ Destroys a specified object """
         new = args.partition(" ")
-        c_name = new[0]
-        c_id = new[2]
-        if c_id and ' ' in c_id:
-            c_id = c_id.partition(' ')[0]
+        clas_name = new[0]
+        clss_id  = new[2]
+        if clss_id  and ' ' in clss_id :
+            clss_id  = clss_id .partition(' ')[0]
 
-        if not c_name:
+        if not clas_name:
             print("** class name missing **")
             return
 
-        if c_name not in HBNBCommand.classes:
+        if clas_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        if not c_id:
+        if not clss_id :
             print("** instance id missing **")
             return
 
-        key = c_name + "." + c_id
+        key = clas_name + "." + clss_id 
 
         try:
             del storage.all()[key]
@@ -231,29 +230,29 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """ Updates a certain object with new info """
-        c_name = c_id = att_name = att_val = kwargs = ''
+        clas_name = clss_id  = att_name = att_val = kwargs = ''
 
         # isolate cls from id/args, ex: (<cls>, delim, <id/args>)
         args = args.partition(" ")
         if args[0]:
-            c_name = args[0]
+            clas_name = args[0]
         else:  # class name not present
             print("** class name missing **")
             return
-        if c_name not in HBNBCommand.classes:  # class name invalid
+        if clas_name not in HBNBCommand.classes:  # class name invalid
             print("** class doesn't exist **")
             return
 
         # isolate id from args
         args = args[2].partition(" ")
         if args[0]:
-            c_id = args[0]
+            clss_id  = args[0]
         else:  # id not present
             print("** instance id missing **")
             return
 
         # generate key from class and id
-        key = c_name + "." + c_id
+        key = clas_name + "." + clss_id 
 
         # determine if key is present
         if key not in storage.all():
