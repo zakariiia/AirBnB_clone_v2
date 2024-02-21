@@ -108,23 +108,21 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not args:
                 raise SyntaxError()
-            command = shlex.split(args)
-            # print(command)
+            cmmnd = shlex.split(args)
             # create the object like this => eval(BaseModel())
-            obj = eval("{}()".format(command[0]))
+            obj = eval("{}()".format(cmmnd[0]))
             # populate the object's parameters
-            for param in command[1:]:
-                p = param.split("=")
-                p[1] = p[1].strip('"')
-                p[1] = p[1].replace('_', ' ')
-                setattr(obj, p[0], p[1])
+            for cmnd in cmmnd[1:]:
+                c = cmnd.split("=")
+                c[1] = c[1].strip('"')
+                c[1] = c[1].replace('_', ' ')
+                setattr(obj, c[0], c[1])
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
-        # new_instance = HBNBCommand.classes[args]()
 
     def help_create(self):
         """ Help information for the create method """
