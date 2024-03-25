@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-start Flask application
+start my Flask web app
 """
 
 from flask import Flask
